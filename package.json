@@ -1,0 +1,28 @@
+{
+  "name": "filelogger-lib",
+  "version": "1.0.0",
+  "description": "simple file logger",
+  "keywords": [
+    "log",
+    "logger",
+    "file",
+    "files",
+    "txt",
+    "json"
+  ],
+  "homepage": "https://github.com/dmi3midd/filelogger-lib#readme",
+  "bugs": {
+    "url": "https://github.com/dmi3midd/filelogger-lib/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmi3midd/filelogger-lib.git"
+  },
+  "license": "MIT",
+  "author": "dmi3mid/dmi3midd",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  }
+}
