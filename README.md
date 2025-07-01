@@ -3,7 +3,9 @@ A good solution for logging. Supports logging to ```.txt```, ```.json```, and co
 
 
 ## Get started
-```npm i filelogger-lib```  
+```
+npm i filelogger-lib
+```  
 ```js
 const Logger = require('filelogger-lib');
 const logger = new Logger(options);
