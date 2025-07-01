@@ -1,12 +1,11 @@
 const now = new Date();
-const date = now.getDate();
+const date = now.getDate() < 10 ? `0${now.getDate()}` : now.getDate();
 const month = now.getMonth() + 1 < 10 ? `0${now.getMonth() + 1}` : now.getMonth() + 1;
 const year = now.getFullYear();
-const hours = now.getHours();
-const minutes = now.getMinutes();
-const seconds = now.getSeconds();
-const milliseconds = now.getMilliseconds();
-const time = `${date}.${month}.${year} ${hours}:${minutes}:${seconds}:${milliseconds}`;
+const hours = now.getHours() < 10 ? `0${now.getHours()}` : now.getHours();
+const minutes = now.getMinutes() < 10 ? `0${now.getMinutes()}` : now.getMinutes();
+const seconds = now.getSeconds() < 10 ? `0${now.getSeconds()}` : now.getSeconds();
+const time = `${date}.${month}.${year} ${hours}:${minutes}:${seconds}`;
 
 function messageTXT(level, prefix, message, payload = null, event = null) {
     const data = `${time}   ${level.padEnd(6, ' ')}${prefix !== null ? '  '+prefix : ''}   ${message}${payload === null  ? '' : '   '+JSON.stringify(payload)}   ${event === null ? '' : event}\n`;

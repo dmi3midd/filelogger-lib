@@ -6,9 +6,9 @@ class LogQueue {
         this.logfunc = logfunc;
     }
 
-    add(data) {
+    async add(data) {
         this.#queue.push(data);
-        this.#process();
+        await this.#process();
     }
 
     async #process() {

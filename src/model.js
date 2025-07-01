@@ -8,6 +8,7 @@ class FileLogger {
     // fields
     #options;
     #pathToFile;
+    #isConslog;
     #queue;
     #prefix = null;
     #levels = {
@@ -28,6 +29,7 @@ class FileLogger {
     constructor(options) {
         this.#options = this.#valid(options);
         this.#pathToFile = path.join(this.#options.directory, this.#options.file+'.'+this.#options.ext);
+        this.#isConslog = this.#options.isConslog;
         this.#message = this.#options.ext === 'txt' ? messageTXT : messageJSON;
         this.#queue = new LogQueue((data) => this.#writelog(this.#pathToFile, data));
     }
@@ -48,18 +50,22 @@ class FileLogger {
     // Method to disahble or enable the level
     setLevel(level, isEnabled) {
         if (typeof level !== 'string') {
-            // throw new Error("Level must be a string");
+            // throw new Error("'level' must be a string");
             return;
         }
         if (typeof isEnabled !== 'boolean') {
-            // throw new Error("isEnabled must be boolean");
+            // throw new Error("'isEnabled' must be boolean");
+            return;
+        }
+        if (!this.#levels.hasOwnProperty(level.trim().toUpperCase())) {
+            // throw new Error("The level doesn't exist");
             return;
         }
         this.#levels[level.trim().toUpperCase()] = isEnabled;
     }
 
     // Method to disable the logger
-    disabled() {
+    disable() {
         Object.keys(this.#levels).forEach(level => this.#levels[level] = false);
     }
 
@@ -69,33 +75,47 @@ class FileLogger {
     }
 
     // Methods for logging
-    start(message, payload) {
+    async start(message, payload) {
+        if (!this.#levels['START']) return;
         const data = this.#message('START', this.#prefix, message, payload);
-        this.#queue.add(data);
+        if (this.#isConslog) console.log(data);
+        await this.#queue.add(data);
     }
-    end(message, payload) {
+    async end(message, payload) {
+        if (!this.#levels['END']) return;
         const data = this.#message('END', this.#prefix, message, payload);
-        this.#queue.add(data);
+        if (this.#isConslog) console.log(data);
+        await this.#queue.add(data);
     }
-    info(message, payload) {
+    async info(message, payload) {
+        if (!this.#levels['INFO']) return;
         const data = this.#message('INFO', this.#prefix, message, payload);
-        this.#queue.add(data);
+        if (this.#isConslog) console.log(data);
+        await this.#queue.add(data);
     }
-    warn(message, payload) {
+    async warn(message, payload) {
+        if (!this.#levels['WARN']) return;
         const data = this.#message('WARN', this.#prefix, message, payload);
-        this.#queue.add(data);
+        if (this.#isConslog) console.log(data);
+        await this.#queue.add(data);
     }
-    error(message, payload) {
+    async error(message, payload) {
+        if (!this.#levels['ERROR']) return;
         const data = this.#message('ERROR', this.#prefix, message, payload);
-        this.#queue.add(data);
+        if (this.#isConslog) console.log(data);
+        await this.#queue.add(data);
     }
-    debug(message, payload) {
+    async debug(message, payload) {
+        if (!this.#levels['START']) return;
         const data = this.#message('DEBUG', this.#prefix, message, payload);
-        this.#queue.add(data);
+        if (this.#isConslog) console.log(data);
+        await this.#queue.add(data);
     }
-    event(message, payload = null, event = null) {
+    async event(message, event, payload = null) {
+        if (!this.#levels['EVENT']) return;
         const data = this.#message('EVENT', this.#prefix, message, payload, event);
-        this.#queue.add(data);
+        if (this.#isConslog) console.log(data);
+        await this.#queue.add(data);
     }
 }
 
