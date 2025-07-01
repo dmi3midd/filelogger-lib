@@ -13,7 +13,7 @@ function valid(options) {
 function directory(directory) {
     if (!directory) {
         let resultDir = __dirname;
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 4; i++) {
             resultDir = path.dirname(resultDir);
         }
         return resultDir;

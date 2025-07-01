@@ -26,7 +26,7 @@ class FileLogger {
     #valid = valid;
     #writelog = writelog;
 
-    constructor(options) {
+    constructor(options = {}) {
         this.#options = this.#valid(options);
         this.#pathToFile = path.join(this.#options.directory, this.#options.file+'.'+this.#options.ext);
         this.#isConslog = this.#options.isConslog;
